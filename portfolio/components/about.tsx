@@ -59,8 +59,8 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
         
-        {/* Left Column: Portrait Card */}
-        <div className="lg:col-span-6 flex justify-center lg:justify-start">
+        {/* Left Column: Portrait Card - Hidden on Mobile */}
+        <div className="hidden lg:flex lg:col-span-6 justify-center lg:justify-start">
           <div 
             ref={portraitRef}
             className="relative w-full min-h-[500px] lg:h-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] group"
@@ -81,7 +81,7 @@ export default function About() {
         </div>
 
         {/* Right Column: Content Area */}
-        <div className="lg:col-span-6 flex flex-col justify-center space-y-8 text-left">
+        <div className="col-span-1 lg:col-span-6 flex flex-col justify-center space-y-8 text-left">
           <div className="space-y-2">
             <span className="text-amber-500/80 text-xs font-bold uppercase tracking-[0.3em]">
               Behind the Code
@@ -93,7 +93,7 @@ export default function About() {
 
           <div 
             ref={contentRef}
-            className="journey-card bg-white/[0.03] border border-white/10 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-2xl max-w-[600px] h-full flex flex-col justify-center"
+            className="journey-card bg-white/[0.03] border border-white/10 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-2xl lg:max-w-[600px] h-full flex flex-col justify-center"
           >
             <div className="space-y-6 text-white/60 leading-relaxed text-base sm:text-lg font-light">
               <p>

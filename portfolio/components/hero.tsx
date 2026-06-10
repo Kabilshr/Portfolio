@@ -7,10 +7,10 @@ export default function Hero() {
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full -z-10 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.05)_0%,transparent_50%)]" />
 
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         
         {/* Left Content Block */}
-        <div className="lg:col-span-7 flex flex-col justify-center space-y-10">
+        <div className="md:col-span-7 flex flex-col justify-center space-y-10 mt-24 md:mt-0">
           <h1 className="text-7xl sm:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] text-white uppercase">
             Kabil <br />
             <span className="text-white/90">Shrestha</span>
@@ -31,8 +31,8 @@ export default function Hero() {
         </div>
 
         {/* Right Visual Block */}
-        <div className="lg:col-span-5 flex justify-center lg:justify-end items-center">
-          <div className="relative w-95 h-135">
+        <div className="md:col-span-5 flex justify-center md:justify-end items-center">
+          <div className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-none aspect-[10/14]">
              <Image 
                 src="/portrait_cutout.png"
                 alt="Kabil Shrestha"
