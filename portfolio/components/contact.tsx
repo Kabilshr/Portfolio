@@ -97,7 +97,7 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-16">
         
         <div className="space-y-6 max-w-2xl">
-          <span className="text-xs font-bold uppercase tracking-[0.3em] transition-colors text-accent">
+          <span className="text-2xl m-3 font-bold uppercase tracking-[0.3em] transition-colors text-accent">
             Let&apos;s Connect
           </span>
           <p className="text-lg sm:text-xl leading-relaxed font-light transition-colors text-muted">

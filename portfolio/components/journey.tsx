@@ -151,20 +151,20 @@ function ExperienceContent({ exp }: { exp: Experience }) {
         {exp.badge && (
           <span 
             className="px-2.5 py-0.5 rounded-full border text-[9px] font-bold uppercase tracking-widest transition-colors text-muted"
-            style={{ backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'var(--card-border)' }}
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.209)', borderColor: 'var(--card-border)' }}
           >
             {exp.badge}
           </span>
         )}
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors text-muted opacity-60">{exp.dates}</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors opacity-60">{exp.dates}</p>
       </div>
       
       <div className="space-y-1">
         <h3 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight transition-colors text-primary">{exp.title}</h3>
-        <h4 className="text-base font-medium transition-colors text-muted">{exp.organization}</h4>
+        <h4 className="text-base font-medium transition-colors">{exp.organization}</h4>
       </div>
 
-      <p className="leading-relaxed text-sm sm:text-[15px] max-w-xl transition-colors text-muted opacity-80">
+      <p className="leading-relaxed text-sm sm:text-[15px] max-w-xl transition-colors opacity-80">
         {exp.description}
       </p>
       
