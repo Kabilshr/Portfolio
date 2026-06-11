@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import ThemeController from "@/components/theme-controller";
 
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
@@ -14,8 +15,8 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio — replace with your info",
+  title: "Kabil Shrestha | AI Student & Full-Stack Developer",
+  description: "Portfolio of Kabil Shrestha - AI Student, Full-Stack Developer, and Tech Community Lead.",
 };
 
 export default function RootLayout({
@@ -28,8 +29,11 @@ export default function RootLayout({
       <body
         className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}
       >
+        <ThemeController />
         <Navbar />
-        {children}
+        <main className="page-content">
+          {children}
+        </main>
       </body>
     </html>
   );

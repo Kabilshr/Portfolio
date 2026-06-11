@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* PHASE 1: SUNRISE HERO (Defaults) */
+  --bg-1: #6E8FE6;
+  --bg-2: #FDBA74;
+  --bg-3: #F59E0B;
+  
+  --overlay-bg: rgb(15, 23, 42);
+  --overlay-opacity: 0.12;
+
+  --text-primary: #FFFFFF;
+  --text-muted: rgba(255, 255, 255, 0.84);
+  
+  --card-bg: rgba(255, 255, 255, 0.14);
+  --card-border: rgba(255, 255, 255, 0.18);
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  
+  --nav-bg: rgba(255, 255, 255, 0.18);
+  --nav-border: rgba(255, 255, 255, 0.18);
+  --nav-text: #FFFFFF;
+  
+  --accent: #FFF1A8;
+  
+  --sun-opacity: 1;
+  --moon-opacity: 0;
+  --star-opacity: 0;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--bg-2);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-roboto-sans);
+  --font-mono: var(--font-roboto-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2), var(--bg-3));
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Readability Overlay System */
+.background-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  opacity: var(--overlay-opacity);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.page-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Theme-Aware Utility Classes */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--card-shadow);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+/* Navigation visibility */
+.nav-glass {
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(18px);
+  color: var(--nav-text);
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
