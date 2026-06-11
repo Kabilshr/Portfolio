@@ -26,6 +26,16 @@
   --font-mono: var(--font-roboto-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: linear-gradient(180deg, var(--bg-1), var(--bg-2), var(--bg-3));
   background-attachment: fixed;
