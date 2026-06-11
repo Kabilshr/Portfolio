@@ -13,12 +13,37 @@ export default function ThemeController() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    
     const root = document.documentElement;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // --- State Definitions for explicit fromTo transitions ---
-    
+    // Set initial state synchronously before anything renders
+    gsap.set(root, {
+      "--bg-1": "#6E8FE6",
+      "--bg-2": "#FDBA74",
+      "--bg-3": "#F59E0B",
+      "--overlay-bg": "rgb(15, 23, 42)",
+      "--overlay-opacity": 0.52,
+      "--text-primary": "#FFFFFF",
+      "--text-muted": "rgba(255,255,255,0.80)",
+      "--card-bg": "rgba(10, 18, 40, 0.55)",
+      "--card-border": "rgba(255,255,255,0.18)",
+      "--nav-bg": "rgba(10, 18, 40, 0.55)",
+      "--nav-border": "rgba(255,255,255,0.18)",
+      "--nav-text": "#FFFFFF",
+      "--accent": "#FFF1A8",
+      "--sun-opacity": 1,
+      "--moon-opacity": 0,
+      "--star-opacity": 0,
+    });
+
+    setMounted(true);
+
+    // --- State Definitions ---
+    // NOTE: no `duration` property on any state — duration lives only on the timeline,
+    // not on state objects. Stray duration values in fromTo vars corrupt GSAP's
+    // internal tween length calculations and cause up/down asymmetry.
+
     const dawnState = {
       "--bg-1": "#6E8FE6", "--bg-2": "#FDBA74", "--bg-3": "#F59E0B",
       "--overlay-bg": "rgb(15, 23, 42)", "--overlay-opacity": 0.52,
@@ -27,7 +52,6 @@ export default function ThemeController() {
       "--nav-bg": "rgba(10, 18, 40, 0.55)", "--nav-border": "rgba(255,255,255,0.18)",
       "--nav-text": "#FFFFFF", "--accent": "#FFF1A8",
       "--sun-opacity": 1, "--moon-opacity": 0, "--star-opacity": 0,
-      duration: 1,
     };
 
     const daylightState = {
@@ -37,29 +61,17 @@ export default function ThemeController() {
       "--card-bg": "rgba(20, 35, 65, 0.48)", "--card-border": "rgba(255,255,255,0.16)",
       "--nav-bg": "rgba(20, 35, 65, 0.48)", "--nav-border": "rgba(255,255,255,0.16)",
       "--nav-text": "#FFFFFF", "--accent": "#93C5FD",
-      "--sun-opacity": 0.45,
-      duration: 1,
+      "--sun-opacity": 0.45, "--moon-opacity": 0, "--star-opacity": 0,
     };
 
     const lateMorningState = {
-      // Warm blue-to-peach — the visual midpoint between steel blue and amber.
-      // Text stays white, so no polarity flip happens here.
-      "--bg-1": "#C4956A",          // warm sand — bridges blue and amber
-      "--bg-2": "#D4A574",          // soft peach
-      "--bg-3": "#E8C99A",          // pale gold horizon
-      "--overlay-bg": "rgb(15, 23, 42)",
-      "--overlay-opacity": 0.32,    // slightly lighter — "more sun"
-      "--text-primary": "#FFFFFF",
-      "--text-muted": "rgba(255,255,255,0.75)",
-      "--card-bg": "rgba(20, 35, 65, 0.42)",
-      "--card-border": "rgba(255,255,255,0.16)",
-      "--nav-bg": "rgba(20, 35, 65, 0.42)",
-      "--nav-border": "rgba(255,255,255,0.16)",
-      "--nav-text": "#FFFFFF",
-      "--accent": "#FFD580",
-      "--sun-opacity": 0.55,
-      "--moon-opacity": 0,
-      "--star-opacity": 0,
+      "--bg-1": "#C4956A", "--bg-2": "#D4A574", "--bg-3": "#E8C99A",
+      "--overlay-bg": "rgb(15, 23, 42)", "--overlay-opacity": 0.32,
+      "--text-primary": "#FFFFFF", "--text-muted": "rgba(255,255,255,0.75)",
+      "--card-bg": "rgba(20, 35, 65, 0.42)", "--card-border": "rgba(255,255,255,0.16)",
+      "--nav-bg": "rgba(20, 35, 65, 0.42)", "--nav-border": "rgba(255,255,255,0.16)",
+      "--nav-text": "#FFFFFF", "--accent": "#FFD580",
+      "--sun-opacity": 0.55, "--moon-opacity": 0, "--star-opacity": 0,
     };
 
     const goldenState = {
@@ -69,30 +81,17 @@ export default function ThemeController() {
       "--card-bg": "rgba(255, 245, 220, 0.92)", "--card-border": "rgba(120, 53, 15, 0.18)",
       "--nav-bg": "rgba(255, 245, 220, 0.85)", "--nav-border": "rgba(120, 53, 15, 0.16)",
       "--nav-text": "#1A0A00", "--accent": "#92400E",
-      "--sun-opacity": 0.65,
-      duration: 1,
+      "--sun-opacity": 0.65, "--moon-opacity": 0, "--star-opacity": 0,
     };
 
     const duskState = {
-      // Between golden (light system) and sunset (dark system).
-      // Deep amber-to-purple — bg is dark enough that we flip back to white text here,
-      // but the warm card backing bleeds in slowly rather than snapping.
-      "--bg-1": "#A0522D",          // sienna — dark warm brown, bridges amber and coral
-      "--bg-2": "#6B3FA0",          // muted purple, not full electric
-      "--bg-3": "#2D1460",          // deep indigo horizon
-      "--overlay-bg": "rgb(30, 15, 40)",
-      "--overlay-opacity": 0.42,
-      "--text-primary": "#FFFFFF",
-      "--text-muted": "rgba(255,255,255,0.78)",
-      "--card-bg": "rgba(20, 10, 45, 0.55)",    // purple-tinted dark card
-      "--card-border": "rgba(255,255,255,0.15)",
-      "--nav-bg": "rgba(20, 10, 45, 0.58)",
-      "--nav-border": "rgba(255,255,255,0.14)",
-      "--nav-text": "#FFFFFF",
-      "--accent": "#FBBF7A",        // warm amber accent carries through from golden
-      "--sun-opacity": 0.35,
-      "--moon-opacity": 0.08,
-      "--star-opacity": 0,
+      "--bg-1": "#A0522D", "--bg-2": "#6B3FA0", "--bg-3": "#2D1460",
+      "--overlay-bg": "rgb(30, 15, 40)", "--overlay-opacity": 0.42,
+      "--text-primary": "#FFFFFF", "--text-muted": "rgba(255,255,255,0.78)",
+      "--card-bg": "rgba(20, 10, 45, 0.55)", "--card-border": "rgba(255,255,255,0.15)",
+      "--nav-bg": "rgba(20, 10, 45, 0.58)", "--nav-border": "rgba(255,255,255,0.14)",
+      "--nav-text": "#FFFFFF", "--accent": "#FBBF7A",
+      "--sun-opacity": 0.35, "--moon-opacity": 0.08, "--star-opacity": 0,
     };
 
     const sunsetState = {
@@ -102,8 +101,7 @@ export default function ThemeController() {
       "--card-bg": "rgba(10, 8, 30, 0.60)", "--card-border": "rgba(255,255,255,0.16)",
       "--nav-bg": "rgba(10, 8, 30, 0.65)", "--nav-border": "rgba(255,255,255,0.14)",
       "--nav-text": "#FFFFFF", "--accent": "#FFD6A5",
-      "--sun-opacity": 0.5, "--moon-opacity": 0.15,
-      duration: 1,
+      "--sun-opacity": 0.5, "--moon-opacity": 0.15, "--star-opacity": 0,
     };
 
     const midnightState = {
@@ -113,8 +111,7 @@ export default function ThemeController() {
       "--card-bg": "rgba(255, 255, 255, 0.09)", "--card-border": "rgba(255,255,255,0.14)",
       "--nav-bg": "rgba(2, 6, 23, 0.75)", "--nav-border": "rgba(255,255,255,0.12)",
       "--nav-text": "#F9FAFB", "--accent": "#A78BFA",
-      "--star-opacity": 1, "--moon-opacity": 1, "--sun-opacity": 0,
-      duration: 1,
+      "--sun-opacity": 0, "--moon-opacity": 1, "--star-opacity": 1,
     };
 
     const masterTimeline = gsap.timeline({
@@ -122,52 +119,36 @@ export default function ThemeController() {
         trigger: "body",
         start: "top top",
         end: "bottom bottom",
-        scrub: 1.4,
+        scrub: 0.2,  // ← was 1.4, the root cause of up/down asymmetry
       }
     });
 
-    // ─── PHASE 1: SUNRISE HERO (0% – 18%) ───────────────────────────────────────
-    masterTimeline.fromTo(root, dawnState, dawnState, 0).addLabel("sunrise");
-
-    // ─── PHASE 2: MID-MORNING / PROJECTS (18% – 33%) ────────────────────────────
-    // Shortened slightly to make room for the late-morning bridge
-    masterTimeline.fromTo(root, dawnState, daylightState, 0.18).addLabel("daylight");
-
-    // ─── PHASE 2.5: LATE MORNING (33% – 42%) ────────────────────────────────────
-    // Blue → warm sand. Text stays white throughout — no polarity flip.
-    // This is the visual ramp-up before golden hour proper.
-    masterTimeline.fromTo(root, daylightState, lateMorningState, 0.33).addLabel("latemorning");
-
-    // ─── PHASE 3: GOLDEN HOUR (42% – 58%) ───────────────────────────────────────
-    // Now the polarity flip (white → dark) happens from a warm-tinted base,
-    // not from steel blue — much less jarring. Golden gets more room: 42%→58%.
-    masterTimeline.fromTo(root, lateMorningState, goldenState, 0.42).addLabel("golden");
-
-    // ─── PHASE 3.5: DUSK (58% – 66%) ────────────────────────────────────────────
-    // Golden → dusk flips text back to white from the warm state,
-    // while bg is already darkening — the eye reads it as natural light loss.
-    masterTimeline.fromTo(root, goldenState, duskState, 0.58).addLabel("dusk");
-
-    // ─── PHASE 4: SUNSET / ABOUT (66% – 80%) ────────────────────────────────────
-    // Dusk → full sunset. Both are dark + white text — no polarity flip at all.
-    // This transition is now purely a hue shift (warm brown → deep purple),
-    // which reads as atmospheric rather than jarring.
-    masterTimeline.fromTo(root, duskState, sunsetState, 0.66).addLabel("sunset");
-
-    // ─── PHASE 5: MIDNIGHT / CONTACT (80% – 100%) ────────────────────────────────
-    masterTimeline.fromTo(root, sunsetState, midnightState, 0.80).addLabel("midnight");
+    masterTimeline
+      .fromTo(root, dawnState,        dawnState,        0     ).addLabel("sunrise")
+      .fromTo(root, dawnState,        daylightState,    0.18  ).addLabel("daylight")
+      .fromTo(root, daylightState,    lateMorningState, 0.33  ).addLabel("latemorning")
+      .fromTo(root, lateMorningState, goldenState,      0.42  ).addLabel("golden")
+      .fromTo(root, goldenState,      duskState,        0.58  ).addLabel("dusk")
+      .fromTo(root, duskState,        sunsetState,      0.66  ).addLabel("sunset")
+      .fromTo(root, sunsetState,      midnightState,    0.80  ).addLabel("midnight");
 
     if (!reduceMotion) {
       // Sun Movement
       gsap.set(sunRef.current, { xPercent: -50, yPercent: -50 });
+
       masterTimeline
-        .fromTo(sunRef.current, { x: "15vw", y: "80vh" }, { x: "25vw", y: "30vh", duration: 0.18 }, 0)
-        .fromTo(sunRef.current, { x: "25vw", y: "30vh" }, { x: "85vw", y: "15vh", duration: 0.15 }, 0.18)  // projects
-        .fromTo(sunRef.current, { x: "85vw", y: "15vh" }, { x: "70vw", y: "25vh", duration: 0.09 }, 0.33)  // late morning
-        .fromTo(sunRef.current, { x: "70vw", y: "25vh" }, { x: "60vw", y: "38vh", duration: 0.16 }, 0.42)  // golden — sun beginning to lower
-        .fromTo(sunRef.current, { x: "60vw", y: "38vh" }, { x: "40vw", y: "58vh", duration: 0.08 }, 0.58)  // dusk — dropping fast
-        .fromTo(sunRef.current, { x: "40vw", y: "58vh" }, { x: "20vw", y: "78vh", duration: 0.14 }, 0.66)  // sunset
-        .fromTo(sunRef.current, { x: "20vw", y: "78vh" }, { x: "10vw", y: "95vh", duration: 0.20 }, 0.80); // midnight
+        // Rise: bottom-left → zenith
+        .fromTo(sunRef.current,
+          { x: "15vw", y: "80vh" },
+          { x: "50vw", y: "8vh", duration: 0.42, ease: "power1.out" }, 0)
+        // Cross: zenith → horizon right  
+        .fromTo(sunRef.current,
+          { x: "50vw", y: "8vh" },
+          { x: "82vw", y: "72vh", duration: 0.38, ease: "power1.in" }, 0.42)
+        // Set: horizon right → below screen
+        .fromTo(sunRef.current,
+          { x: "82vw", y: "72vh" },
+          { x: "92vw", y: "108vh", duration: 0.20, ease: "power2.in" }, 0.80);
 
       // Moon Movement
       gsap.set(moonRef.current, { xPercent: -50, yPercent: -50 });
@@ -194,7 +175,11 @@ export default function ThemeController() {
           style={{ 
             background: "radial-gradient(circle, #FFF7AD 0%, #FFD166 45%, #F97316 100%)",
             opacity: "var(--sun-opacity)",
-            boxShadow: "0 0 60px rgba(255, 209, 102, 0.4)"
+            boxShadow: "0 0 60px rgba(255, 209, 102, 0.4)",
+            left: 0,
+            top: 0,
+            // Match the first fromTo start position exactly so there's no jump on mount
+            transform: "translate(-50%, -50%) translate(15vw, 80vh)"  // ← this is actually fine
           }}
         />
         
@@ -205,7 +190,10 @@ export default function ThemeController() {
           style={{ 
             background: "#F8FAFC",
             boxShadow: "0 0 40px rgba(147, 197, 253, 0.35)",
-            opacity: "var(--moon-opacity)"
+            opacity: "var(--moon-opacity)",
+            left: 0,
+            top: 0,
+            transform: "translate(-50%, -50%) translate(90vw, 80vh)"
           }}
         />
 
