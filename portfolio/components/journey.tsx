@@ -77,14 +77,14 @@ export default function Journey() {
   }, []);
 
   return (
-    <section id="journey" className="w-full py-32 px-6 sm:px-12 lg:px-24 bg-black font-sans overflow-hidden" ref={containerRef}>
+    <section id="journey" className="w-full py-32 px-6 sm:px-12 lg:px-24 bg-transparent font-sans overflow-hidden" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="max-w-2xl mb-20">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight text-left">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6 tracking-tight text-left transition-colors text-primary">
             Journey
           </h2>
-          <p className="text-lg text-white/50 leading-relaxed text-left">
+          <p className="text-lg leading-relaxed text-left transition-colors text-muted">
             A progression from freelance development and customer-facing roles to technical leadership and product ownership.
           </p>
         </div>
@@ -92,12 +92,13 @@ export default function Journey() {
         {/* Timeline Container */}
         <div className="relative">
           {/* Vertical Line Anchor (Centered on Desktop, Left on Mobile) */}
-          <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/10" />
+          <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-current opacity-10" />
           
           {/* Progress Filling Line */}
           <div 
             ref={lineRef}
-            className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-amber-400 via-blue-400 to-white origin-top z-10"
+            className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-0 bottom-0 w-px origin-top z-10"
+            style={{ backgroundColor: 'var(--accent)' }}
           />
 
           {/* Timeline Items */}
@@ -111,16 +112,18 @@ export default function Journey() {
               >
                 {/* Milestone Node */}
                 <div 
-                  className="journey-node absolute left-4 sm:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full z-20 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                  className="journey-node absolute left-4 sm:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full z-20 transition-colors"
                   style={{ 
-                    backgroundColor: exp.nodeColor,
-                    boxShadow: `0 0 15px ${exp.nodeColor}66`
+                    backgroundColor: 'var(--accent)',
+                    boxShadow: `0 0 15px var(--accent)`
                   }}
                 />
 
                 {/* Content Card Side */}
                 <div className="w-full sm:w-[42%] pl-12 sm:pl-0">
-                  <div className="journey-card bg-white/[0.03] border border-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-[24px] transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]">
+                  <div 
+                    className="journey-card card p-6 sm:p-8 rounded-[24px] transition-all duration-300 hover:opacity-100"
+                  >
                     <ExperienceContent exp={exp} />
                   </div>
                 </div>
@@ -128,8 +131,8 @@ export default function Journey() {
                 {/* Empty Side (Desktop Only) / Date and Organization placeholder */}
                 <div className="hidden sm:flex sm:w-[42%] px-12 flex-col justify-center">
                    <div className={`space-y-1 ${index % 2 === 0 ? "text-right" : "text-left"}`}>
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/20">{exp.dates}</p>
-                      <h4 className="text-sm font-semibold text-white/10 uppercase tracking-wider">{exp.organization}</h4>
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] transition-colors text-muted opacity-40">{exp.dates}</p>
+                      <h4 className="text-sm font-semibold uppercase tracking-wider transition-colors text-primary opacity-20">{exp.organization}</h4>
                    </div>
                 </div>
               </div>
@@ -146,19 +149,22 @@ function ExperienceContent({ exp }: { exp: Experience }) {
     <div className="space-y-4 text-left">
       <div className="flex flex-wrap items-center gap-3">
         {exp.badge && (
-          <span className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[9px] font-bold uppercase tracking-widest text-white/60">
+          <span 
+            className="px-2.5 py-0.5 rounded-full border text-[9px] font-bold uppercase tracking-widest transition-colors text-muted"
+            style={{ backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'var(--card-border)' }}
+          >
             {exp.badge}
           </span>
         )}
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">{exp.dates}</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors text-muted opacity-60">{exp.dates}</p>
       </div>
       
       <div className="space-y-1">
-        <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight">{exp.title}</h3>
-        <h4 className="text-base font-medium text-white/60">{exp.organization}</h4>
+        <h3 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight transition-colors text-primary">{exp.title}</h3>
+        <h4 className="text-base font-medium transition-colors text-muted">{exp.organization}</h4>
       </div>
 
-      <p className="text-white/40 leading-relaxed text-sm sm:text-[15px] max-w-xl">
+      <p className="leading-relaxed text-sm sm:text-[15px] max-w-xl transition-colors text-muted opacity-80">
         {exp.description}
       </p>
       
@@ -167,7 +173,8 @@ function ExperienceContent({ exp }: { exp: Experience }) {
           href={`https://${exp.website}`} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="inline-block text-xs font-bold text-white/50 hover:text-white border-b border-white/10 hover:border-white transition-all pb-0.5"
+          className="inline-block text-xs font-bold border-b transition-all pb-0.5 text-primary"
+          style={{ borderColor: 'var(--card-border)' }}
         >
           {exp.website}
         </a>

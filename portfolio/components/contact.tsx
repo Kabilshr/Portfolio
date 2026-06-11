@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,17 +11,6 @@ interface ContactNode {
   label: string;
   href: string;
   icon: React.ReactNode;
-}
-
-interface Star {
-  id: number;
-  width: string;
-  height: string;
-  top: string;
-  left: string;
-  opacity: number;
-  delay: string;
-  duration: string;
 }
 
 const contactLinks: ContactNode[] = [
@@ -58,22 +47,8 @@ export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const nodesRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const linesRef = useRef<(SVGLineElement | null)[]>([]);
-  const [stars, setStars] = useState<Star[]>([]);
 
   useEffect(() => {
-    // Generate stars only on the client to avoid hydration mismatch
-    const generatedStars = [...Array(20)].map((_, i) => ({
-      id: i,
-      width: Math.random() * 2 + 1 + "px",
-      height: Math.random() * 2 + 1 + "px",
-      top: Math.random() * 100 + "%",
-      left: Math.random() * 100 + "%",
-      opacity: Math.random() * 0.5 + 0.2,
-      delay: Math.random() * 3 + "s",
-      duration: Math.random() * 3 + 2 + "s",
-    }));
-    setStars(generatedStars);
-
     const ctx = gsap.context(() => {
       // Reveal nodes sequentially
       gsap.fromTo(
@@ -117,52 +92,26 @@ export default function Contact() {
     <section 
       id="contact" 
       ref={sectionRef}
-      className="relative w-full pt-40 pb-20 px-6 sm:px-12 lg:px-24 bg-[#020617] font-sans overflow-hidden"
+      className="relative w-full py-40 pb-20 px-6 sm:px-12 lg:px-24 bg-transparent font-sans overflow-hidden"
     >
-      {/* Midnight Cosmos Atmosphere */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Twinkling Stars */}
-        {stars.map((star) => (
-          <div 
-            key={star.id}
-            className="absolute rounded-full bg-white animate-pulse"
-            style={{
-              width: star.width,
-              height: star.height,
-              top: star.top,
-              left: star.left,
-              opacity: star.opacity,
-              animationDelay: star.delay,
-              animationDuration: star.duration,
-            }}
-          />
-        ))}
-        {/* Moonlight Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full" />
-      </div>
-
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-16">
         
-        {/* Header */}
         <div className="space-y-6 max-w-2xl">
-          <span className="text-blue-400/80 text-xs font-bold uppercase tracking-[0.3em]">
-            Let's Connect
+          <span className="text-xs font-bold uppercase tracking-[0.3em] transition-colors text-accent">
+            Let&apos;s Connect
           </span>
-          <p className="text-lg sm:text-xl text-white/50 leading-relaxed font-light">
+          <p className="text-lg sm:text-xl leading-relaxed font-light transition-colors text-muted">
             Open to internships, software engineering opportunities, freelance projects, and conversations about technology.
           </p>
         </div>
 
-        {/* Contact Constellation */}
         <div className="relative w-full max-w-2xl mx-auto pt-10 pb-10 flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-24">
           
-          {/* Connecting Lines (Desktop) */}
           <div className="absolute hidden sm:block inset-0 pointer-events-none z-0">
-             <div className="absolute top-1/2 left-[20%] right-[20%] h-px bg-white/10 -translate-y-1/2" />
+             <div className="absolute top-1/2 left-[20%] right-[20%] h-px transition-colors -translate-y-1/2" style={{ backgroundColor: 'var(--card-border)' }} />
           </div>
 
-          {/* Connecting Line (Mobile) */}
-          <div className="absolute sm:hidden top-24 bottom-24 left-1/2 -translate-x-1/2 w-px bg-white/10 z-0" />
+          <div className="absolute sm:hidden top-24 bottom-24 left-1/2 -translate-x-1/2 w-px transition-colors z-0" style={{ backgroundColor: 'var(--card-border)' }} />
 
           {contactLinks.map((node, index) => (
             <Link
@@ -170,17 +119,18 @@ export default function Contact() {
               href={node.href}
               target="_blank"
               rel="noopener noreferrer"
-              ref={(el) => (nodesRef.current[index] = el)}
-              className="group relative z-10 w-32 h-32 flex flex-col items-center justify-center rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-xl transition-all duration-500 hover:bg-white/[0.08] hover:border-white/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] hover:-translate-y-2 shrink-0"
+              ref={(el) => { if (el) nodesRef.current[index] = el; }}
+              className="card group relative z-10 w-32 h-32 flex flex-col items-center justify-center rounded-full transition-all duration-500 hover:-translate-y-2 shrink-0 backdrop-blur-xl"
             >
-              {/* Node Glow */}
               <div className="absolute inset-0 rounded-full bg-blue-500/0 group-hover:bg-blue-500/5 transition-all duration-500" />
               
               <div className="relative flex flex-col items-center space-y-3">
-                <div className="flex items-center justify-center w-6 h-6 text-white/40 group-hover:text-white group-hover:scale-110 transition-all duration-500">
-                  {node.icon}
+                <div className="flex items-center justify-center w-6 h-6 transition-all duration-500 text-muted">
+                  <div className="group-hover:scale-110 transition-transform group-hover:text-current">
+                    {node.icon}
+                  </div>
                 </div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/30 group-hover:text-white/80 transition-colors">
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-colors opacity-40 group-hover:opacity-100 text-primary">
                   {node.label}
                 </span>
               </div>
@@ -191,8 +141,7 @@ export default function Contact() {
 
       </div>
 
-      {/* Footer / Copyright */}
-      <div className="mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-white/20 text-xs font-medium">
+      <div className="mt-20 pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-medium transition-colors text-muted opacity-30" style={{ borderColor: 'var(--card-border)' }}>
         <p>© 2026 Kabil Shrestha. All rights reserved.</p>
         <p>Built with Next.js & GSAP</p>
       </div>

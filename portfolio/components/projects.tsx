@@ -40,25 +40,24 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="w-full py-24 px-6 sm:px-12 lg:px-24 bg-black font-sans">
-      <div className="max-w-7xl mx-auto">
+    <section id="projects" className="w-full py-[clamp(80px,10vh,120px)] px-6 sm:px-12 bg-transparent font-sans">
+      <div className="max-w-[1180px] mx-auto relative z-2">
         {/* Header */}
-        <div className="max-w-2xl mb-20">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+        <div className="max-w-2xl mb-12 sm:mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 sm:mb-6 tracking-tight text-primary transition-colors duration-300">
             Featured Projects
           </h2>
-          <p className="text-lg text-white/50 leading-relaxed">
+          <p className="text-lg leading-relaxed text-muted transition-colors duration-300">
             A selection of academic, freelance, and personal projects spanning full-stack development, research automation, and real-time systems.
           </p>
         </div>
 
-        {/* Staggered Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
-          {projects.map((project, index) => (
+        {/* 2-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+          {projects.map((project) => (
             <ProjectCard 
               key={project.title}
               {...project}
-              className={index % 2 !== 0 ? "lg:mt-12" : ""}
             />
           ))}
         </div>

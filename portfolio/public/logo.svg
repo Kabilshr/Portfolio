@@ -1,0 +1,39 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sunGlow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#FFD166"/>
+      <stop offset="48%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </radialGradient>
+
+    <linearGradient id="skyGradient" x1="256" y1="0" x2="256" y2="512">
+      <stop offset="0%" stop-color="#0B1026"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#skyGradient)"/>
+
+  <!-- Subtle sunrise orb -->
+  <circle cx="352" cy="150" r="86" fill="url(#sunGlow)" opacity="0.95"/>
+
+  <!-- Horizon curve -->
+  <path d="M112 332C153 290 200 270 256 270C312 270 359 290 400 332" 
+        stroke="#F9FAFB" 
+        stroke-width="18" 
+        stroke-linecap="round" 
+        opacity="0.16"/>
+
+  <!-- K monogram -->
+  <path d="M164 142V370" 
+        stroke="#F9FAFB" 
+        stroke-width="42" 
+        stroke-linecap="round"/>
+
+  <path d="M334 144L205 258L344 370" 
+        stroke="#F9FAFB" 
+        stroke-width="42" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+</svg>

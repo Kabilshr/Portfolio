@@ -23,7 +23,6 @@ export default function ProjectCard({
   tech,
   status,
   link,
-  isPrimary,
   className = "",
 }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -34,22 +33,18 @@ export default function ProjectCard({
         cardRef.current,
         { 
           opacity: 0, 
-          y: 80,
-          scale: 0.95,
-          rotationX: 10,
-          skewY: 2
+          y: 40,
+          scale: 0.98,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          rotationX: 0,
-          skewY: 0,
-          duration: 1,
-          ease: "expo.out",
+          duration: 0.8,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: cardRef.current,
-            start: "top 92%",
+            start: "top 95%",
             toggleActions: "play none none none",
           },
         }
@@ -62,35 +57,32 @@ export default function ProjectCard({
   return (
     <div 
       ref={cardRef}
-      style={{ perspective: "1000px" }}
-      className={`group relative flex flex-col p-8 sm:p-10 rounded-[24px] bg-white/[0.03] border border-white/10 backdrop-blur-xl transition-all duration-500 hover:bg-white/[0.04] hover:border-white/15 hover:-translate-y-1 hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.5)] ${
-        isPrimary ? "lg:scale-[1.01] border-white/20 bg-white/[0.04]" : ""
-      } ${className} opacity-0`}
+      className={`card group relative flex flex-col p-8 rounded-[24px] transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl min-h-[260px] max-w-[560px] opacity-0 ${className}`}
     >
       {/* Status Badge */}
       {status && (
-        <div className="absolute top-8 right-8 px-3 py-1 rounded-full bg-white/10 border border-white/10">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
+        <div className="absolute top-6 right-8 px-3 py-1 rounded-full bg-current/10 border border-current/10">
+          <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">
             {status}
           </span>
         </div>
       )}
 
       <div className="flex-1 text-left">
-        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 tracking-tight group-hover:text-white transition-colors">
+        <h3 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight text-primary">
           {title}
         </h3>
         
-        <p className="text-white/50 leading-relaxed mb-8 max-w-md">
+        <p className="text-base leading-relaxed mb-6 max-w-md text-muted">
           {description}
         </p>
 
         {/* Tech Tags */}
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap gap-2 mb-8">
           {tech.map((tag) => (
             <span 
               key={tag}
-              className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-[11px] font-medium text-white/60"
+              className="px-2.5 py-0.5 rounded-full bg-current/5 border border-current/10 text-[10px] font-semibold tracking-wide text-muted"
             >
               {tag}
             </span>
@@ -103,9 +95,9 @@ export default function ProjectCard({
         <Link 
           href={link} 
           target="_blank"
-          className="inline-flex items-center text-sm font-semibold text-white group/link"
+          className="inline-flex items-center text-sm font-bold group/link text-primary"
         >
-          <span className="border-b border-transparent group-hover/link:border-white transition-all">
+          <span className="border-b-2 border-transparent group-hover/link:border-current transition-all">
             View Project
           </span>
           <svg 
@@ -114,7 +106,7 @@ export default function ProjectCard({
             viewBox="0 0 24 24" 
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </Link>
       )}
